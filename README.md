@@ -1,4 +1,3 @@
-# WALLPAPER-IMAGEM-PARA-PC
 
 # Score! Hero Mod - Moedas Infinitas & Sem Ads
 
