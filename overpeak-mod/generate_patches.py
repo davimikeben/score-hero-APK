@@ -1,131 +1,57 @@
 #!/usr/bin/env python3
 """
-OverPeak v0.71 Mod Menu - Auto Patch Generator
-Generates smali patch instructions for Infinite Ammo and other mods
-Works around sandbox limitations by providing code instructions
+OverPeak v0.71 Mod Menu - IL2CPP Patch Generator
+Gera instruções para patching IL2CPP (NÃO smali tradicional)
+
+IMPORTANTE: OverPeak usa arquitetura IL2CPP do Unity.
+Patches smali tradicionais NÃO funcionarão para Infinite Ammo.
+O caminho correto é hookar métodos em libil2cpp.so.
 """
 
-import sys
-
-def generate_infinite_ammo_patch():
-    """Generate smali patch for Infinite Ammo"""
+def generate_il2cpp_patch_guide():
     print("=" * 60)
-    print("INFINITE AMMO PATCH FOR OVERPEAK V0.71")
+    print("INFINITE AMMO PATCH - IL2CPP APPROACH")
     print("=" * 60)
     print()
-    print("TARGET: Weapon/Firearm class getAmmo() method")
+    print("IMPORTANTE: OverPeak usa IL2CPP - smali patches nao funcionam!")
     print()
-    print("ORIGINAL SMALI (simplified):")
-    print("""    .method public getAmmo()F
-        .locals 1
-        .prologue
-        const-float v0, 0.0f
-        returnfloat v0
-    .end method""")
+    print("TOOLS NECESSARIAS:")
+    print("  1. Il2CppDumper: https://github.com/Perfare/Il2CppDumper")
+    print("  2. Il2CppPatcher ou XUnityPatcher")
     print()
-    print("PATCHED SMALI (Infinite Amma):")
-    print("""    .method public getAmmo()F
-        .locals 2
-        .prologue
-        # Return maximum ammo (0x7f = 127 floats, approx max value)
-        const/4 v1, 0x7f
-        float-to-int v1, v1
-        int-to-float v1, v1
-        returnfloat v1
-    .end method""")
+    print("PASSOS:")
+    print("  Step 1: python3 Il2CppDumper OverPeak_v0.71.apk /tmp/ildata")
+    print("  Step 2: Encontrar classes Weapon, PlayerWeapon")
+    print("  Step 3: Identificar m_CurrentProjectileCount offset")
+    print("  Step 4: Aplicar patch IL2CPP para valor 9999")
     print()
-    print("INSTRUCTIONS:")
-    print("1. Find the Firearm weapon class in smali folders")
-    print("2. Locate the getAmmo() method")
-    print("3. Replace with patched version above")
-    print("4. Rebuild APK with apktool")
+    print("EXEMPLO DE PATCH IL2CPP (C# Harmony):")
+    print("  [HarmonyPatch(typeof(Weapon), \"get_CurrentProjectileCount\")]")
+    print("  class InfiniteAmmoPatch {")
+    print("      static void Postfix(ref int __result) {")
+    print("          __result = 9999; // Infinite ammo!")
+    print("      }")
+    print("  }")
     print()
-
-def generate_god_mode_patch():
-    """Generate smali patch for God Mode"""
-    print("=" * 60)
-    print("GOD MODE PATCH FOR OVERPEAK V0.71")
-    print("=" * 60)
+    print("EM VEZ DE SMALI (nao funciona):")
+    print("  # NAO FAÇA ISTO - nao funciona em IL2CPP")
+    print("  .method public getAmmo()F")
+    print("      .locals 2")
+    print("      const/4 v1, 0x7f")
+    print("      float-to-int v1, v1")
+    print("      int-to-float v1, v1")
+    print("      returnfloat v1")
+    print("  .end method")
     print()
-    print("TARGET: Player takeDamage() method")
+    print("ARQUIVOS NO GITHUB:")
+    print("  - ASSEMBLY_INSTRUCTIONS.md - Instrucoes detalhadas")
+    print("  - generate_patches.py - Este script")
+    print("  - README.md - Documentacao IL2CPP")
     print()
-    print("ORIGINAL SMALI (simplified):")
-    print("""    .method public takeDamage(F)V
-        .locals 3
-        .param  land F v0, "damage" land F
-        .prologue
-        invoke-virtual {p0, v0}, LandFG;->setHealth(F)V
-        ... check if dead ...
-    .end method""")
-    print()
-    print("PATCHED SMALI (God Mode):")
-    print("""    .method public takeDamage(F)V
-        .locals 3
-        .param  land F v0, "damage" land F
-        .prologue
-        # God Mode: completely ignore all damage
-        # Skip damage application entirely
-        return-void
-    .end method""")
-    print()
-    print("INSTRUCTIONS:")
-    print("1. Find player damage handling code in smali")
-    print("2. Locate takeDamage method")
-    print("3. Replace with patched version (returns immediately)")
-    print("4. Rebuild APK with apktool")
-    print()
-
-def generate_unlimited_energy_patch():
-    """Generate smali patch for Unlimited Energy"""
-    print("=" * 60)
-    print("UNLIMITED ENERGY PATCH FOR OVERPEAK V0.71")
-    print("=" * 60)
-    print()
-    print("TARGET: Energy class getEnergy() method")
-    print()
-    print("PATCHED SMALI:")
-    print("""    .method public getEnergy()F
-        .locals 1
-        .prologue
-        # Return maximum energy value
-        const/4 v1, 0x7f  # 127.0f maximum
-        returnfloat v1
-    .end method""")
-    print()
-    print("INSTRUCTIONS:")
-    print("1. Find energy/ability class in smali folders")
-    print("2. Locate getEnergy() method")  
-    print("3. Replace with patched version above")
-    print("4. Rebuild APK with apktool")
+    print("PARA TESTAR ANTES DE COMPILAR:")
+    print("  - Use Cheat Engine com IL2CPP support")
+    print("  - Ou WeMod com OverPeak v0.71")
     print()
 
 if __name__ == "__main__":
-    print("OverPeak v0.71 Mod Menu - Patch Generator")
-    print("Generated for sandbox environment")
-    print()
-    
-    while True:
-        print("Select patch to generate:")
-        print("1. Infinite Ammo")
-        print("2. God Mode") 
-        print("3. Unlimited Energy")
-        print("4. All patches")
-        print("5. Exit")
-        
-        choice = input("\nEnter choice (1-5): ")
-        
-        if choice == "1":
-            generate_infinite_ammo_patch()
-        elif choice == "2":
-            generate_god_mode_patch()
-        elif choice == "3":
-            generate_unlimited_energy_patch()
-        elif choice == "4":
-            generate_infinite_ammo_patch()
-            generate_god_mode_patch()
-            generate_unlimited_energy_patch()
-        elif choice == "5":
-            break
-        else:
-            print("Invalid choice, try again")
-        print()
+    generate_il2cpp_patch_guide()

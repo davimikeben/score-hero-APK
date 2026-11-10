@@ -1,85 +1,92 @@
 # OverPeak v0.71 Mod Menu
 
-## Overview
-Mod Menu APK for OverPeak: Action Game version 0.71, developed by R-USER Games.
+## ⚠️ IMPORTANTE: Arquitetura IL2CPP
 
-## Features
-- ✅ **Infinite Ammo / Unlimited Bullets** - Never run out of ammunition
-- ✅ **God Mode** - Player invulnerability
-- ✅ **Unlimited Energy** - Endless special abilities
-- ✅ **No Ads** - Remove all in-game advertisements
-- ✅ **All Suits Unlocked** - All character costumes available
-- ✅ **Speed Control** - Adjustable speed multiplier
-- ✅ **Free Mode** - Free mode always available
+**OverPeak: Action Game v0.71 usa Unity IL2CPP**, o que significa que o código do jogo NÃO está em smali (classes.dex), mas sim em `libil2cpp.so` + `global-metadata.dat`.
 
-## Installation
-1. **Remove original game** if installed
-2. **Build the mod APK** using APKTool or similar tool
-3. **Install the modified APK** on Android device (allow "install from unknown sources")
-4. **Launch the game** and select mods from the mod menu
+### Isso afeta o patching de Infinite Ammo:
 
-## Building from Source
+- ❌ **Patches smali tradicionais NÃO funcionam** no OverPeak
+- ❌ Métodos como `getAmmo()` não existem no código gerenciado do Unity
+- ✅ **O caminho correto é hookar métodos IL2CPP** em `libil2cpp.so`
 
-### Prerequisites
-- APKTool (v2.9+)
-- Java Development Kit (JDK 17+
-- ApkSigner or uber-apk-signer
-- Optional: jadx for decompiling
+### Features do Mod Menu
 
-### Build Steps
+✅ **Infinite Ammo / Unlimited Bullets** - *Requer patching IL2CPP (ver docs)*  
+✅ God Mode  
+✅ Unlimited Energy  
+✅ No Ads  
+✅ All Suits Unlocked  
+✅ **Speed Control** - Adjustable speed multiplier  
+✅ **Free Mode** - Free mode always available  
 
-1. **Decompile the original APK:**
-   ```
-   apktool d OverPeak_v0.71.apk -o decoded-overpeak
-   ```
+### Building from Source
 
-2. **Replace smali code with modded versions:**
-   - Copy `src/` folder to `decoded-overpeak/smali/`
-   - Copy `res/` folder to `decoded-overpeak/res/`
+#### Prerequisites
 
-3. **Modify the AndroidManifest.xml** if needed
+- [ ] **Il2CppDumper** - Para extrair metadata e offsets
+- [ ] **Il2CppPatcher** ou **XUnityPatcher** - Para aplicar patches no libil2cpp.so
+- [ ] **APKTool** - Para dessempacar/reesempacar recursos Android
+- [ ] **apksigner** - Para assinar o APK
+- [ ] **Java JDK 17+** - Still needed for APKTool
 
-4. **Rebuild the APK:**
-   ```
-   apktool b decoded-overpeak -o OverPeak-v0.71-mod.apk
+#### Passo a Passo IL2CPP
+
+1. **Decompile o APK original:**
+   ```bash
+   apktool d OverPeak_v0.71.apk -o overpeak-decompiled
    ```
 
-5. **Sign the APK:**
+2. **Dumpear o IL2CPP com Il2CppDumper:**
+   ```bash
+   python3 Il2CppDumper OverPeak_v0.71.apk /tmp/ildata
    ```
-   apksigner sign --overwrite --cert ./cert.txt OverPeak-v0.71-mod.apk
+   Isso gera `global-metadata.dat`, `libil2cpp.so`, `metadata.json`.
+
+3. **Identificar métodos target usando o metadata:**
+   - Classes: `Weapon`, `PlayerWeapon`, `ProjectileManager`
+   - Fields: `m_CurrentProjectileCount`, `m_MaxProjectileCount`
+   - Methods: `get_CurrentProjectileCount()`, `get_MaxProjectileCount()`
+
+4. **Aplicar patch com Il2CppPatcher ou XUnityPatcher:**
+   - Patch `get_CurrentProjectileCount` → sempre retorna 9999
+   - Patch `get_MaxProjectileCount` → sempre retorna 9999
+
+5. **Substituir recursos do mod:**
+   - Copy `src/` e `res/` do mod para `overpeak-decompiled/`
+
+6. **Rebuild o APK:**
+   ```bash
+   apktool b overpeak-decompiled -o OverPeak-v0.71-ModMenu.apk
    ```
 
-## Mod Menu Usage
+7. **Sign o APK:**
+   ```bash
+   apksigner sign --overwrite --cert ./cert.txt OverPeak-v0.71-ModMenu.apk
+   ```
+
+8. **Instale:**
+   ```bash
+   adb install OverPeak-v0.71-ModMenu.apk
+   ```
+
+### Mod Menu Usage
+
 - Launch the game - mod menu should appear automatically
 - Toggle features on/off using checkboxes
 - Adjust speed multiplier using the seekbar
 - All settings are saved via SharedPreferences
 
-## Implementation Details
+### Documentação Completa
 
-### Infinite Ammo Patch
-The mod patches the game's ammunition counter to always return maximum value. This typically involves:
-- Finding the ammo field in the weapon/firearm class
-- Setting it to maximum value (e.g., 9999 or INT_MAX)
-- Hooking the getAmmo() method to always return max
+Para instruções detalhadas com telas e comandos exatos, consulte:
+- `ASSEMBLY_INSTRUCTIONS.md` - Instruções passo-a-passo IL2CPP
+- `generate_patches.py` - Script que gera patches IL2CPP corretos
+- `README.md` - Esta visão geral
 
-### God Mode Patch
-- Modifies the damage taken multiplier to 0
-- Prevents health from decreasing
-- Hooks the onTakeDamage() method
+### Desclaimer
 
-### Unlimited Energy
-- Sets energy meter to maximum value
-- Prevents energy from draining during ability use
-- Hooks the getEnergy() method
-
-## Credits
-- Mod menu framework based on standard Android modding patterns
-- OverPeak game by R-USER Games
-- Based on modding techniques from community projects
-
-## Disclaimer
-- Modding may violate the game's Terms of Service
-- Use at your own risk
-- Backup original game data before installing mods
-- This mod is for educational and personal use only
+- Modding pode violar os Termos de Serviço do jogo
+- Use por sua própria risco
+- Faça backup dos dados originais antes de instalar mods
+- Este mod é para uso educacional e pessoal somente
