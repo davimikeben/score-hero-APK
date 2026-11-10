@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">#6200EE</item>
+        <item name="colorPrimaryDark">#3700B2</item>
+        <item name="colorAccent">#03DAC6</item>
+        <item name="android:windowBackground">@color/mod_background</item>
+    </style>
+
+    <color name="mod_background">#212121</color>
+    <color name="mod_text_primary">#FFFFFF</color>
+    <color name="mod_text_secondary">#BBBBBB</color>
+</resources>

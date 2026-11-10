@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.rusergames.overpeak.mod">
+    
+    <!-- OverPeak v0.71 Mod Menu APK -->
+    <!-- Features: Infinite Ammo, God Mode, Unlimited Energy, etc. -->
+    
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="OverPeak Mod Menu"
+        android:theme="@style/ModTheme">
+        
+        <!-- Mod Menu Activity -->
+        <activity
+            android:name=".ModMenuActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
+        <!-- Patch Application Activity -->
+        <activity
+            android:name=".patched.MainActivity"
+            android:exported="false">
+        </activity>
+        
+    </application>
+    
+    <!-- Permissions -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    
+</manifest>

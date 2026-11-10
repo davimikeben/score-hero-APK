@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="#212121">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="OverPeak v0.71 Mod Menu"
+        android:textSize="24sp"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:layout_marginBottom="16dp"/>
+
+    <CheckBox
+        android:id="@+id/chk_infinite_ammo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Infinite Ammo / Unlimited Bullets"
+        android:textColor="#FFFFFF"
+        android:checked="false"/>
+
+    <CheckBox
+        android:id="@+id/chk_god_mode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="God Mode"
+        android:textColor="#FFFFFF"
+        android:checked="false"/>
+
+    <CheckBox
+        android:id="@+id/chk_unlimited_energy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Unlimited Energy"
+        android:textColor="#FFFFFF"
+        android:checked="false"/>
+
+    <CheckBox
+        android:id="@+id/chk_no_ads"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Remove Ads"
+        android:textColor="#FFFFFF"
+        android:checked="false"/>
+
+    <CheckBox
+        android:id="@+id/chk_all_suits"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="All Suits Unlocked"
+        android:textColor="#FFFFFF"
+        android:checked="false"/>
+
+    <SeekBar
+        android:id="@+id/seekbar_speed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="10"
+        android:progress="1"/>
+
+    <TextView
+        android:id="@+id/text_speed_value"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="1.0x"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:layout_margin="8dp"/>
+
+    <Button
+        android:id="@+id/btn_apply"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Apply Mods"
+        android:background="#6200EE"
+        android:textColor="#FFFFFF"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Mod Features:"
+        android:textColor="#BBBBBB"
+        android:textSize="12sp"
+        android:layout_marginTop="8dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="• Infinite Ammo\n• God Mode\n• Unlimited Energy\n• No Ads\n• All Suits Unlocked\n• Speed Control"
+        android:textColor="#666666"
+        android:textSize="12sp"/>
+</LinearLayout>
