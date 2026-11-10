@@ -44,7 +44,7 @@
    Isso gera `global-metadata.dat`, `libil2cpp.so`, `metadata.json`.
 
 3. **Identificar métodos target usando o metadata:**
-   - Classes: `Weapon`, `PlayerWeapon`, `ProjectileManager`
+   - Classes:  - fields: , 
    - Fields: `m_CurrentProjectileCount`, `m_MaxProjectileCount`
    - Methods: `get_CurrentProjectileCount()`, `get_MaxProjectileCount()`
 

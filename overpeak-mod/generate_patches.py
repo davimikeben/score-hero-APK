@@ -25,7 +25,7 @@ def generate_correct_guide():
     print()
     print("PASSOS:")
     print("  Step 1: python3 Il2CppDumper OverPeak_v0.71.apk /tmp/ildata")
-    print("  Step 2: Encontrar classes Weapon, PlayerWeapon no metadata")
+    print("  Step 2: Encontrar classes ProjectileManager no metadata")
     print("  Step 3: Identificar offsets m_CurrentProjectileCount")
     print("  Step 4: Aplicar patch com Il2CppPatcher para valor 9999")
     print()

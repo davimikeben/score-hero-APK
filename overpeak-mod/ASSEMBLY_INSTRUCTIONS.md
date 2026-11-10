@@ -33,7 +33,7 @@ Em vez de patchar `getAmmo()` em smali, precisamos hookar métodos C# no `libil2
    Isso gera `global-metadata.dat`, `libil2cpp.so`, e `metadata.json`.
 
 3. **Identificar os métodos target usando o metadata:**
-   - Procurar por classes: `Weapon`, `PlayerWeapon`, `Projectile`
+   - Procurar por classes: `ProjectileManager`, `Projectile`
    - Fields: `m_CurrentProjectileCount`, `m_MaxProjectileCount`
    - Methods: `get_CurrentProjectileCount()`, `get_MaxProjectileCount()`
 
@@ -43,7 +43,7 @@ Em vez de patchar `getAmmo()` em smali, precisamos hookar métodos C# no `libil2
    il2cpppatcher patch \
      --apk overpeak-original.apk \
      --output OverPeak-v0.71-ModMenu.apk \
-     --patch "Weapon_get_CurrentProjectileCount:const/4 v0, 0x65"
+     --patch "ProjectileManager_get_CurrentProjectileCount:const/4 v0, 0x65"
    ```
    Onde `0x65` (101 decimal) ou outro valor máximo substitui o contador.
 
@@ -98,9 +98,9 @@ Isso gera:
 
 ### Step 3: Identificar os métodos target
 Use o output do Il2CppDumper para procurar:
-- `Weapon.get_MaxProjectileCount()` 
-- `Weapon.get_CurrentProjectileCount()`
-- `PlayerWeapon.get_Ammo()`
+- `ProjectileManager_get_MaxProjectileCount()` 
+- `ProjectileManager_get_CurrentProjectileCount()`
+- `ProjectileManager_get_Ammo()`
 
 ### Step 4: Aplicar patch com Il2CppPatcher
 ```bash
@@ -108,7 +108,7 @@ Use o output do Il2CppDumper para procurar:
 il2cpppatcher patch \
   --input "OverPeak_v0.71.apk" \
   --output "OverPeak_v0.71-ModMenu.apk" \
-  --patch "Weapon_get_CurrentProjectileCount:const/4 v0, 0x65"
+  --patch "ProjectileManager_get_CurrentProjectileCount:const/4 v0, 0x65"
 ```
 
 ### Step 5: Substituir recursos do mod
