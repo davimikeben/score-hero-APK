@@ -32,18 +32,18 @@ Em vez de patchar `getAmmo()` em smali, precisamos hookar métodos C# no `libil2
    ```
    Isso gera `global-metadata.dat`, `libil2cpp.so`, e `metadata.json`.
 
-3. **Identificar os métodos target usando o metadata:**
-   - Procurar por classes: `ProjectileManager`, `Projectile`
-   - Fields: `m_CurrentProjectileCount`, `m_MaxProjectileCount`
-   - Methods: `get_CurrentProjectileCount()`, `get_MaxProjectileCount()`
+3. **Identificar os targets usando o metadata:**
+   - Fields de contagem: `CurrentProjectileCount`, `MaxProjectileCount`
+   - Classes de projétil: `Projectile`, `ProjectileBase`, `PeakProjectile`, `Projectiles`, `SavedProjectiles`
+   - Use o Il2CppDumper para descobrir a **classe real** que declara os fields `CurrentProjectileCount`/`MaxProjectileCount` (o classname vira o prefixo do offset a patchar; **não use nomes inventados**).
 
 4. **Aplicar patch com Il2CppPatcher:**
    ```bash
-   # Exemplo (pseudo-comando)
+   # Exemplo (pseudo-comando) - troque NomeDaClasseReal pelo classname real do step 3
    il2cpppatcher patch \
      --apk overpeak-original.apk \
      --output OverPeak-v0.71-ModMenu.apk \
-     --patch "ProjectileManager_get_CurrentProjectileCount:const/4 v0, 0x65"
+     --patch "NomeDaClasseReal_get_CurrentProjectileCount:const/4 v0, 0x65"
    ```
    Onde `0x65` (101 decimal) ou outro valor máximo substitui o contador.
 
@@ -96,20 +96,21 @@ Isso gera:
 - `libil2cpp.so` - O código compilado nativo
 - `metadata.json` - Informações de classes e methods
 
-### Step 3: Identificar os métodos target
+### Step 3: Identificar os targets
 Use o output do Il2CppDumper para procurar:
-- `ProjectileManager_get_MaxProjectileCount()` 
-- `ProjectileManager_get_CurrentProjectileCount()`
-- `ProjectileManager_get_Ammo()`
+- `CurrentProjectileCount` (field de contagem atual)
+- `MaxProjectileCount` (field de contagem máxima)
+- Classes que referenciam projéteis: `Projectile`, `ProjectileBase`, `PeakProjectile`, `Projectiles`, `SavedProjectiles`
 
 ### Step 4: Aplicar patch com Il2CppPatcher
 ```bash
-# Exemplo de comando IL2cppPatcher
+# Exemplo de comando IL2cppPatcher (troque NomeDaClasseReal pelo classname real do step 3)
 il2cpppatcher patch \
   --input "OverPeak_v0.71.apk" \
   --output "OverPeak_v0.71-ModMenu.apk" \
-  --patch "ProjectileManager_get_CurrentProjectileCount:const/4 v0, 0x65"
+  --patch "NomeDaClasseReal_get_CurrentProjectileCount:const/4 v0, 0x65"
 ```
+> Não invente o nome da classe: use o classname que o Il2CppDumper associar aos fields `CurrentProjectileCount`/`MaxProjectileCount`.
 
 ### Step 5: Substituir recursos do mod
 ```bash

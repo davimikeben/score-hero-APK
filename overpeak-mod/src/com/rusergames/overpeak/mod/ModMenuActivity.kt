@@ -4,8 +4,6 @@ import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 import android.widget.*
-import android.view.*
-import kotlinx.coroutines.*
 
 // Mod Menu for OverPeak v0.71
 // Features: Infinite Ammo, God Mode, Unlimited Energy, etc.
@@ -31,11 +29,11 @@ public class ModMenuActivity : Activity() {
     private var txtSpeed: SeekBar? = null
     private var txtSpeedValue: TextView? = null
 
-    private static final String TAG = "ModMenuActivity"
+    private val TAG = "ModMenuActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.mod_menu)
+        setContentView(R.layout.mod_menu_layout)
 
         // Initialize UI
         chkInfiniteAmmo = findViewById(R.id.chk_infinite_ammo)
@@ -83,6 +81,18 @@ public class ModMenuActivity : Activity() {
             applyAllSuitsPatch(isChecked)
             saveModSettings()
             Log.d(TAG, "All Suits: ${if (allSuitsUnlocked) "ON" else "OFF"}")
+        }
+
+        // Apply Mods button
+        findViewById<Button>(R.id.btn_apply).setOnClickListener {
+            applyInfiniteAmmoPatch(infiniteAmmo)
+            applyGodModePatch(godMode)
+            applyUnlimitedEnergyPatch(unlimitedEnergy)
+            applyNoAdsPatch(noAds)
+            applyAllSuitsPatch(allSuitsUnlocked)
+            applySpeedPatch(speedMultiplier)
+            saveModSettings()
+            Toast.makeText(this, "Mods aplicados!", Toast.LENGTH_SHORT).show()
         }
 
         // Speed multiplier seekbar

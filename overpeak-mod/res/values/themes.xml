@@ -1,15 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="ModTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Mod Menu UI Styles -->
         <item name="colorPrimary">@color/mod_primary</item>
         <item name="colorPrimaryDark">@color/mod_primary_dark</item>
         <item name="colorAccent">@color/mod_accent</item>
     </style>
-    
-    <color name="mod_primary">#6200EE</color>
-    <color name="mod_primary_dark">#3700B2</color>
-    <color name="mod_accent">#03DAC6</color>
-    <color name="mod_background">#212121</color>
-    <color name="mod_text_primary">#FFFFFF</color>
 </resources>

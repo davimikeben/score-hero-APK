@@ -43,10 +43,9 @@
    ```
    Isso gera `global-metadata.dat`, `libil2cpp.so`, `metadata.json`.
 
-3. **Identificar métodos target usando o metadata:**
-   - Classes:  - fields: , 
-   - Fields: `m_CurrentProjectileCount`, `m_MaxProjectileCount`
-   - Methods: `get_CurrentProjectileCount()`, `get_MaxProjectileCount()`
+3. **Identificar os targets usando o metadata:**
+   - Fields: `CurrentProjectileCount`, `MaxProjectileCount`
+   - Referências a projéteis nas classes: `Projectile`, `ProjectileBase`, `PeakProjectile`, `Projectiles`, `SavedProjectiles`
 
 4. **Aplicar patch com Il2CppPatcher ou XUnityPatcher:**
    - Patch `get_CurrentProjectileCount` → sempre retorna 9999

@@ -1,35 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- OverPeak v0.71 Mod Menu Configuration -->
-    <!-- Mod Menu: Infinite Ammo + Other Features -->
-    
-    <!-- Infinite Ammo Flag -->
+    <!-- Mod Menu features, aligned with ModMenuActivity.kt and mod_menu_layout.xml -->
+
     <bool name="mod_infinite_ammo">true</bool>
-    
-    <!-- Unlimited Bullets Flag -->
-    <bool name="mod_unlimited_bullets">true</bool>
-    
-    <!-- God Mode Flag -->
     <bool name="mod_god_mode">true</bool>
-    
-    <!-- Unlimited Energy Flag -->
     <bool name="mod_unlimited_energy">true</bool>
-    
-    <!-- Unlimited Credits -->
-    <bool name="mod_unlimited_credits">true</bool>
-    
-    <!-- All Suits Unlocked -->
-    <bool name="mod_all_suits_unlocked">true</bool>
-    
-    <!-- No Ads -->
     <bool name="mod_no_ads">true</bool>
-    
-    <!-- Speed Multiplier -->
+    <bool name="mod_all_suits_unlocked">true</bool>
     <bool name="mod_speed_multiplier">true</bool>
-    
-    <!-- Free Mode -->
-    <bool name="mod_free_mode">true</bool>
-    
-    <!-- Unlock All Lasers -->
-    <bool name="mod_all_lasers_unlocked">true</bool>
 </resources>
